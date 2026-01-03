@@ -24,7 +24,7 @@
 
 ```bash
 # Clone and build
-git clone <repository-url>
+git clone https://github.com/mostafa-re/kiwi.git
 cd kiwi
 make build
 
@@ -137,7 +137,7 @@ kiwi/
 ├── proto/
 │   ├── replication.proto          # Protobuf definitions
 │   ├── replication.pb.go          # Generated code
-│   └── replication_grpc.pb.go    # Generated gRPC code
+│   └── replication_grpc.pb.go     # Generated gRPC code
 ├── scripts/
 │   ├── examples.sh                # API examples
 │   ├── replication_demo.sh        # Replication demo
@@ -180,12 +180,6 @@ The system supports master-slave replication with **strong consistency** guarant
 1. **Prepare Phase** - Master sends PREPARE to all slaves → slaves stage data (don't apply yet)
 2. **Commit/Abort Phase** - If ALL ready → COMMIT all; If ANY fails → ABORT all
 
-**Guarantees:**
-
-✅ All slaves succeed → Data on **ALL** nodes
-❌ Any slave fails → Data on **NO** nodes (atomic rollback)
-🔒 Writes to slaves → Rejected (read-only replicas)
-
 **Trade-offs:**
 
 | Aspect | Choice | Reason |
@@ -227,7 +221,7 @@ Environment variables for replication:
 
 ```bash
 # Clone repository
-git clone <repository-url>
+git clone https://github.com/mostafa-re/kiwi.git
 cd kiwi
 
 # Install dependencies

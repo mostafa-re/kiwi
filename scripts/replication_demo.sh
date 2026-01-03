@@ -16,7 +16,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo -e "${BLUE}╔══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║           KV-Service Replication Demo                        ║${NC}"
+echo -e "${BLUE}║           kiwi Replication Demo                              ║${NC}"
 echo -e "${BLUE}║           1 Master + 2 Slaves (Strong Consistency)           ║${NC}"
 echo -e "${BLUE}╚══════════════════════════════════════════════════════════════╝${NC}"
 echo ""

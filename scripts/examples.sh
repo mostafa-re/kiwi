@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# KV Service API Examples
+# kiwi API Examples
 # Make sure the server is running before executing this script
 
 BASE_URL="http://localhost:3300"
 
 echo "======================================"
-echo "KV Service API Examples"
+echo "kiwi API Examples"
 echo "======================================"
 
 # Color codes for output

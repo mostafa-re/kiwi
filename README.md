@@ -6,19 +6,17 @@
 [![gRPC](https://img.shields.io/badge/Protocol-gRPC-244c5a?style=flat&logo=grpc)](https://grpc.io/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker)](https://www.docker.com/)
 
----
 
 ## Features
 
-✨ **RESTful HTTP API** - Full CRUD operations with collection-based namespacing
-🔄 **Master-Slave Replication** - Strong consistency using Two-Phase Commit (2PC)
-💾 **Persistent Storage** - LevelDB embedded database with crash recovery
-⚡ **High Performance** - 40K-60K writes/sec, 80K-120K reads/sec (small values)
-🔌 **Zero Dependencies** - Self-contained, no external services required
-🐳 **Docker Ready** - Containerized deployment with cluster orchestration
-🎯 **Clean Architecture** - Modular design with clear separation of concerns
+- ✨ **RESTful HTTP API** - Full CRUD operations with collection-based namespacing
+- 🔄 **Master-Slave Replication** - Strong consistency using Two-Phase Commit (2PC)
+- 💾 **Persistent Storage** - LevelDB embedded database with crash recovery
+- ⚡ **High Performance** - 40K-60K writes/sec, 80K-120K reads/sec (small values)
+- 🔌 **Zero Dependencies** - Self-contained, no external services required
+- 🐳 **Docker Ready** - Containerized deployment with cluster orchestration
+- 🎯 **Clean Architecture** - Modular design with clear separation of concerns
 
----
 
 ## Quick Start
 
@@ -60,7 +58,6 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
----
 
 ## Table of Contents
 
@@ -73,7 +70,6 @@ docker-compose logs -f
 - [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
 
----
 
 ## Architecture
 
@@ -152,7 +148,6 @@ kiwi/
 └── README.md
 ```
 
----
 
 ## Replication
 
@@ -219,7 +214,6 @@ Environment variables for replication:
 | Slave 1 | `http://localhost:3301` | `localhost:50052` |
 | Slave 2 | `http://localhost:3302` | `localhost:50053` |
 
----
 
 ## Installation
 
@@ -259,7 +253,6 @@ make cluster-down  # Stop replication cluster
 make demo          # Run replication demo
 ```
 
----
 
 ## Configuration
 
@@ -296,15 +289,9 @@ environment:
   - DB_PATH=/app/data
 ```
 
----
 
 ## API Reference
 
-### Base URL
-
-```
-http://localhost:3300
-```
 
 ### Endpoints
 
@@ -445,7 +432,6 @@ DELETE /objects/:key?collection={collection}
 curl -X DELETE http://localhost:3300/objects/user_123?collection=users
 ```
 
----
 
 ## Performance
 
@@ -480,7 +466,6 @@ curl -X DELETE http://localhost:3300/objects/user_123?collection=users
 - **Horizontal:** Collection-based sharding, client-side partitioning
 - **Dataset:** Tested up to 10M keys
 
----
 
 ## Deployment
 
@@ -537,7 +522,6 @@ docker-compose down
 - RAM: 512MB-1GB minimum
 - Storage: SSD recommended
 
----
 
 ## Troubleshooting
 
@@ -579,7 +563,6 @@ Error: runtime: out of memory
 
 **Solution:** Increase available memory, reduce cache size, implement data archival
 
----
 
 ## Use Cases
 
@@ -590,7 +573,6 @@ Error: runtime: out of memory
 - 🗂️ Metadata storage for distributed systems
 - 🧪 Development and testing environments
 
----
 
 ## Storage Details
 
@@ -636,7 +618,6 @@ Values stored as JSON, supporting all valid JSON types:
 - Bloom filters for fast lookups
 - Crash recovery via write-ahead logging
 
----
 
 ## Testing
 
@@ -667,7 +648,6 @@ Tests measure:
 - Mixed workloads
 - Concurrent operations
 
----
 
 ## References
 
@@ -678,7 +658,6 @@ Tests measure:
 - [gRPC](https://grpc.io/)
 - [Protocol Buffers](https://protobuf.dev/)
 
----
 
 ## License
 

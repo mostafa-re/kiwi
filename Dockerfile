@@ -1,5 +1,5 @@
 # Build stage
-FROM golang:1.21-alpine3.20 AS builder
+FROM golang:1.24-alpine3.22 AS builder
 
 # Version build args
 ARG VERSION=dev
@@ -19,7 +19,7 @@ RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo \
     -o kiwi cmd/main.go
 
 # Final stage
-FROM alpine:3.20
+FROM alpine:3.22
 
 # Copy binary from builder and create appuser
 RUN apk --no-cache add ca-certificates

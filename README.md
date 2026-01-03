@@ -1,6 +1,6 @@
 # kiwi - Lightweight, distributed key-value store with strong consistency
 
-[![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)](https://go.dev/)
+[![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat&logo=go)](https://go.dev/)
 [![LevelDB](https://img.shields.io/badge/Storage-LevelDB-green?style=flat)](https://github.com/syndtr/goleveldb)
 [![Fiber](https://img.shields.io/badge/Framework-Fiber-00ACD7?style=flat)](https://gofiber.io/)
 [![gRPC](https://img.shields.io/badge/Protocol-gRPC-244c5a?style=flat&logo=grpc)](https://grpc.io/)
@@ -110,7 +110,7 @@ docker-compose logs -f
 
 | Component | Technology |
 |-----------|-----------|
-| **Language** | Go 1.21+ |
+| **Language** | Go 1.24+ |
 | **Web Framework** | Fiber v2 |
 | **Storage Engine** | GoLevelDB |
 | **Replication** | gRPC + Protocol Buffers |
@@ -225,7 +225,7 @@ Environment variables for replication:
 
 ### Prerequisites
 
-- **Go** 1.21 or higher ([download](https://go.dev/dl/))
+- **Go** 1.24 or higher ([download](https://go.dev/dl/))
 - **Docker** (optional, for containerized deployment)
 - **Make** (optional, for build automation)
 

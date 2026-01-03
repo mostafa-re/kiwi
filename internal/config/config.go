@@ -30,11 +30,11 @@ type Config struct {
 	BuildTime    string
 
 	// Replication settings
-	NodeID       string   // Unique identifier for this node
-	Role         Role     // master or slave
-	GRPCPort     string   // Port for gRPC replication service
-	MasterAddr   string   // Master address (for slaves to connect)
-	SlaveAddrs   []string // Slave addresses (for master to replicate to)
+	NodeID     string   // Unique identifier for this node
+	Role       Role     // master or slave
+	GRPCPort   string   // Port for gRPC replication service
+	MasterAddr string   // Master address (for slaves to connect)
+	SlaveAddrs []string // Slave addresses (for master to replicate to)
 }
 
 // Load reads configuration from environment variables with defaults
@@ -52,7 +52,7 @@ func Load() *Config {
 	return &Config{
 		Port:         getEnv("PORT", "3300"),
 		DatabasePath: getEnv("DB_PATH", "./data"),
-		AppName:      "KV Service",
+		AppName:      "kiwi",
 		Version:      Version,
 		GitCommit:    GitCommit,
 		BuildTime:    BuildTime,

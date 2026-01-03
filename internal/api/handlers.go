@@ -1,6 +1,7 @@
 package api
 
 import (
+	"kv-service/internal/config"
 	"kv-service/internal/models"
 	"kv-service/internal/storage"
 
@@ -9,19 +10,38 @@ import (
 
 // Handler contains HTTP request handlers
 type Handler struct {
-	store storage.Store
+	store  *storage.ReplicatedStore
+	config *config.Config
 }
 
 // NewHandler creates a new handler instance
-func NewHandler(store storage.Store) *Handler {
-	return &Handler{store: store}
+func NewHandler(store *storage.ReplicatedStore, cfg *config.Config) *Handler {
+	return &Handler{store: store, config: cfg}
 }
 
 // HealthCheck handles health check requests
 func (h *Handler) HealthCheck(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(models.HealthResponse{
 		Status: "healthy",
+		NodeID: h.config.NodeID,
+		Role:   string(h.config.Role),
 	})
+}
+
+// ClusterStatus returns cluster status information
+func (h *Handler) ClusterStatus(c *fiber.Ctx) error {
+	status := models.ClusterStatus{
+		NodeID:  h.config.NodeID,
+		Role:    string(h.config.Role),
+		Version: h.config.Version,
+	}
+
+	if h.config.IsMaster() && h.store.GetManager() != nil {
+		status.SlaveCount = h.store.GetManager().SlaveCount()
+		status.SlaveHealth = h.store.GetManager().HealthCheckAll()
+	}
+
+	return c.Status(fiber.StatusOK).JSON(status)
 }
 
 // PutObject handles storing a key-value pair

@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package replication;
+
+option go_package = "kv-service/proto";
+
+// ReplicationService handles data synchronization between master and slaves
+// Uses Two-Phase Commit (2PC) for strong consistency
+service ReplicationService {
+    // Phase 1: Prepare - slave validates and stages the operation
+    rpc Prepare(PrepareRequest) returns (PrepareResponse);
+
+    // Phase 2: Commit - slave applies the staged operation
+    rpc Commit(CommitRequest) returns (CommitResponse);
+
+    // Phase 2: Abort - slave discards the staged operation
+    rpc Abort(AbortRequest) returns (AbortResponse);
+
+    // HealthCheck checks if the slave is alive
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+// Operation type for 2PC
+enum OperationType {
+    PUT = 0;
+    DELETE = 1;
+}
+
+// PrepareRequest contains the operation to be prepared
+message PrepareRequest {
+    string transaction_id = 1;  // Unique transaction ID
+    OperationType operation = 2;
+    string collection = 3;
+    string key = 4;
+    bytes value = 5;  // JSON-encoded value (for PUT)
+    uint64 sequence = 6;
+}
+
+// PrepareResponse indicates if slave is ready to commit
+message PrepareResponse {
+    bool ready = 1;  // true = ready to commit, false = abort
+    string error = 2;
+}
+
+// CommitRequest tells slave to apply the prepared operation
+message CommitRequest {
+    string transaction_id = 1;
+}
+
+// CommitResponse confirms the commit
+message CommitResponse {
+    bool success = 1;
+    string error = 2;
+}
+
+// AbortRequest tells slave to discard the prepared operation
+message AbortRequest {
+    string transaction_id = 1;
+}
+
+// AbortResponse confirms the abort
+message AbortResponse {
+    bool success = 1;
+}
+
+// HealthCheckRequest is empty
+message HealthCheckRequest {}
+
+// HealthCheckResponse contains health status
+message HealthCheckResponse {
+    bool healthy = 1;
+    string node_id = 2;
+    string role = 3;
+}

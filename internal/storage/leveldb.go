@@ -28,6 +28,24 @@ func (s *LevelDBStore) Close() error {
 	return s.db.Close()
 }
 
+// PutDirect stores raw bytes directly (used for replication)
+func (s *LevelDBStore) PutDirect(collection, key string, value []byte) error {
+	if key == "" {
+		return ErrInvalidKey
+	}
+	dbKey := s.makeKey(collection, key)
+	return s.db.Put([]byte(dbKey), value, nil)
+}
+
+// DeleteDirect deletes a key directly (used for replication)
+func (s *LevelDBStore) DeleteDirect(collection, key string) error {
+	if key == "" {
+		return ErrInvalidKey
+	}
+	dbKey := s.makeKey(collection, key)
+	return s.db.Delete([]byte(dbKey), nil)
+}
+
 // makeKey creates a namespaced key with collection prefix
 func (s *LevelDBStore) makeKey(collection, key string) string {
 	return fmt.Sprintf("%s:%s", collection, key)

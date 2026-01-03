@@ -30,7 +30,7 @@ COPY --from=builder /build/kv-service .
 RUN mkdir -p /app/data && chown -R appuser:appuser /app
 USER appuser
 
-EXPOSE 3300
+EXPOSE 3300 50051
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:3300/health || exit 1

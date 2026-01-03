@@ -38,4 +38,15 @@ type ErrorResponse struct {
 // HealthResponse represents the health check response
 type HealthResponse struct {
 	Status string `json:"status"`
+	NodeID string `json:"node_id,omitempty"`
+	Role   string `json:"role,omitempty"`
+}
+
+// ClusterStatus represents the cluster status response
+type ClusterStatus struct {
+	NodeID      string          `json:"node_id"`
+	Role        string          `json:"role"`
+	Version     string          `json:"version"`
+	SlaveCount  int             `json:"slave_count,omitempty"`
+	SlaveHealth map[string]bool `json:"slave_health,omitempty"`
 }

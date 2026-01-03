@@ -1,21 +1,94 @@
 services:
-  kv-service:
-    image: kv-service
+  # Master node - handles all writes and replicates to slaves
+  kv-master:
+    image: kv-service:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: kv-service
+    container_name: kv-master
     ports:
       - "3300:3300"
+      - "50051:50051"
     environment:
       - PORT=3300
+      - GRPC_PORT=50051
       - DB_PATH=/app/data
+      - NODE_ID=master
+      - ROLE=master
+      - SLAVE_ADDRS=kv-slave-1:50051,kv-slave-2:50051
     volumes:
-      - ./data:/app/data
+      - ./data/master:/app/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3300/health"]
-      interval: 30s
+      interval: 10s
       timeout: 3s
       retries: 3
       start_period: 5s
+    depends_on:
+      - kv-slave-1
+      - kv-slave-2
+    networks:
+      - kv-network
+
+  # Slave node 1 - receives replicated data, serves reads
+  kv-slave-1:
+    image: kv-service:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kv-slave-1
+    ports:
+      - "3301:3300"
+      - "50052:50051"
+    environment:
+      - PORT=3300
+      - GRPC_PORT=50051
+      - DB_PATH=/app/data
+      - NODE_ID=slave-1
+      - ROLE=slave
+      - MASTER_ADDR=kv-master:50051
+    volumes:
+      - ./data/slave-1:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3300/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    networks:
+      - kv-network
+
+  # Slave node 2 - receives replicated data, serves reads
+  kv-slave-2:
+    image: kv-service:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kv-slave-2
+    ports:
+      - "3302:3300"
+      - "50053:50051"
+    environment:
+      - PORT=3300
+      - GRPC_PORT=50051
+      - DB_PATH=/app/data
+      - NODE_ID=slave-2
+      - ROLE=slave
+      - MASTER_ADDR=kv-master:50051
+    volumes:
+      - ./data/slave-2:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3300/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    networks:
+      - kv-network
+
+networks:
+  kv-network:
+    driver: bridge

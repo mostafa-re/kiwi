@@ -18,8 +18,8 @@ type Server struct {
 }
 
 // NewServer creates and configures a new HTTP server
-func NewServer(cfg *config.Config, store storage.Store) *Server {
-	handler := NewHandler(store)
+func NewServer(cfg *config.Config, store *storage.ReplicatedStore) *Server {
+	handler := NewHandler(store, cfg)
 
 	app := fiber.New(fiber.Config{
 		AppName:      cfg.AppName,
@@ -44,6 +44,9 @@ func NewServer(cfg *config.Config, store storage.Store) *Server {
 func (s *Server) setupRoutes() {
 	// Health check endpoint
 	s.app.Get("/health", s.handler.HealthCheck)
+
+	// Cluster status endpoint
+	s.app.Get("/cluster", s.handler.ClusterStatus)
 
 	// API routes group
 	api := s.app.Group("/objects")

@@ -1,9 +1,9 @@
 package api
 
 import (
-	"kv-service/internal/config"
-	"kv-service/internal/models"
-	"kv-service/internal/storage"
+	"kiwi/internal/config"
+	"kiwi/internal/models"
+	"kiwi/internal/storage"
 
 	"github.com/gofiber/fiber/v2"
 )

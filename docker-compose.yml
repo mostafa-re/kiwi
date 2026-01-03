@@ -1,11 +1,11 @@
 services:
   # Master node - handles all writes and replicates to slaves
-  kv-master:
-    image: kv-service:latest
+  kiwi-master:
+    image: kiwi:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: kv-master
+    container_name: kiwi-master
     ports:
       - "3300:3300"
       - "50051:50051"
@@ -15,7 +15,7 @@ services:
       - DB_PATH=/app/data
       - NODE_ID=master
       - ROLE=master
-      - SLAVE_ADDRS=kv-slave-1:50051,kv-slave-2:50051
+      - SLAVE_ADDRS=kiwi-slave-1:50051,kiwi-slave-2:50051
     volumes:
       - ./data/master:/app/data
     restart: unless-stopped
@@ -26,18 +26,18 @@ services:
       retries: 3
       start_period: 5s
     depends_on:
-      - kv-slave-1
-      - kv-slave-2
+      - kiwi-slave-1
+      - kiwi-slave-2
     networks:
-      - kv-network
+      - kiwi-network
 
   # Slave node 1 - receives replicated data, serves reads
-  kv-slave-1:
-    image: kv-service:latest
+  kiwi-slave-1:
+    image: kiwi:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: kv-slave-1
+    container_name: kiwi-slave-1
     ports:
       - "3301:3300"
       - "50052:50051"
@@ -47,7 +47,7 @@ services:
       - DB_PATH=/app/data
       - NODE_ID=slave-1
       - ROLE=slave
-      - MASTER_ADDR=kv-master:50051
+      - MASTER_ADDR=kiwi-master:50051
     volumes:
       - ./data/slave-1:/app/data
     restart: unless-stopped
@@ -58,15 +58,15 @@ services:
       retries: 3
       start_period: 5s
     networks:
-      - kv-network
+      - kiwi-network
 
   # Slave node 2 - receives replicated data, serves reads
-  kv-slave-2:
-    image: kv-service:latest
+  kiwi-slave-2:
+    image: kiwi:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: kv-slave-2
+    container_name: kiwi-slave-2
     ports:
       - "3302:3300"
       - "50053:50051"
@@ -76,7 +76,7 @@ services:
       - DB_PATH=/app/data
       - NODE_ID=slave-2
       - ROLE=slave
-      - MASTER_ADDR=kv-master:50051
+      - MASTER_ADDR=kiwi-master:50051
     volumes:
       - ./data/slave-2:/app/data
     restart: unless-stopped
@@ -87,8 +87,8 @@ services:
       retries: 3
       start_period: 5s
     networks:
-      - kv-network
+      - kiwi-network
 
 networks:
-  kv-network:
+  kiwi-network:
     driver: bridge

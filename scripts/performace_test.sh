@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Performance Testing Script for KV Service
+# Performance Testing Script for kiwi
 # Requires: curl, jq, time
 
 BASE_URL="http://localhost:3300"
@@ -14,7 +14,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo "======================================"
-echo "KV Service Performance Tests"
+echo "kiwi Performance Tests"
 echo "======================================"
 
 # Check if server is running
@@ -23,7 +23,7 @@ if curl -s -f "$BASE_URL/health" > /dev/null 2>&1; then
     echo -e "${GREEN}OK${NC}"
 else
     echo -e "${RED}FAILED${NC}"
-    echo "Please start the server first: ./kv-service"
+    echo "Please start the server first: ./kiwi"
     exit 1
 fi
 

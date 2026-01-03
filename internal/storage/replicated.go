@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"kv-service/internal/config"
-	"kv-service/internal/replication"
+	"kiwi/internal/config"
+	"kiwi/internal/replication"
 )
 
 // ReplicatedStore wraps a store with replication support using 2PC

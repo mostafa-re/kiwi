@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package replication;
 
-option go_package = "kv-service/proto";
+option go_package = "kiwi/proto";
 
 // ReplicationService handles data synchronization between master and slaves
 // Uses Two-Phase Commit (2PC) for strong consistency

@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	pb "kv-service/proto"
+	pb "kiwi/proto"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

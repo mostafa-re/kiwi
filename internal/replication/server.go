@@ -7,8 +7,8 @@ import (
 	"net"
 	"sync"
 
-	"kv-service/internal/config"
-	pb "kv-service/proto"
+	"kiwi/internal/config"
+	pb "kiwi/proto"
 
 	"google.golang.org/grpc"
 )

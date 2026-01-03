@@ -531,7 +531,8 @@ const file_proto_replication_proto_rawDesc = "" +
 	"\aPrepare\x12\x1b.replication.PrepareRequest\x1a\x1c.replication.PrepareResponse\x12A\n" +
 	"\x06Commit\x12\x1a.replication.CommitRequest\x1a\x1b.replication.CommitResponse\x12>\n" +
 	"\x05Abort\x12\x19.replication.AbortRequest\x1a\x1a.replication.AbortResponse\x12P\n" +
-	"\vHealthCheck\x12\x1f.replication.HealthCheckRequest\x1a .replication.HealthCheckResponseB\x12Z\x10kv-service/protob\x06proto3"
+	"\vHealthCheck\x12\x1f.replication.HealthCheckRequest\x1a .replication.HealthCheckResponseB\fZ\n" +
+	"kiwi/protob\x06proto3"
 
 var (
 	file_proto_replication_proto_rawDescOnce sync.Once

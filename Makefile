@@ -5,7 +5,7 @@
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
 GIT_COMMIT ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 BUILD_TIME ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
-LDFLAGS := -ldflags="-w -s -X 'kv-service/internal/config.Version=$(VERSION)' -X 'kv-service/internal/config.GitCommit=$(GIT_COMMIT)' -X 'kv-service/internal/config.BuildTime=$(BUILD_TIME)'"
+LDFLAGS := -ldflags="-w -s -X 'kiwi/internal/config.Version=$(VERSION)' -X 'kiwi/internal/config.GitCommit=$(GIT_COMMIT)' -X 'kiwi/internal/config.BuildTime=$(BUILD_TIME)'"
 
 # Default target
 help:
@@ -40,18 +40,18 @@ proto:
 
 # Build the application
 build:
-	@echo "Building kv-service $(VERSION)..."
-	@go build $(LDFLAGS) -o kv-service cmd/main.go
+	@echo "Building kiwi $(VERSION)..."
+	@go build $(LDFLAGS) -o kiwi cmd/main.go
 
 # Run the application (standalone master mode)
 run: build
-	@echo "Starting kv-service as standalone master..."
-	@ROLE=master NODE_ID=standalone ./kv-service
+	@echo "Starting kiwi as standalone master..."
+	@ROLE=master NODE_ID=standalone ./kiwi
 
 # Clean build artifacts
 clean:
 	@echo "Cleaning..."
-	@rm -f kv-service
+	@rm -f kiwi
 	@rm -rf data/
 
 # Install dependencies
@@ -62,24 +62,24 @@ deps:
 # Build Docker image
 docker-build:
 	@echo "Building Docker image $(VERSION)..."
-	@docker build --build-arg VERSION=$(VERSION) --build-arg GIT_COMMIT=$(GIT_COMMIT) --build-arg BUILD_TIME=$(BUILD_TIME) -t kv-service:$(VERSION) -t kv-service:latest .
+	@docker build --build-arg VERSION=$(VERSION) --build-arg GIT_COMMIT=$(GIT_COMMIT) --build-arg BUILD_TIME=$(BUILD_TIME) -t kiwi:$(VERSION) -t kiwi:latest .
 
 # Run single instance with Docker
 docker-run: docker-build
 	@echo "Starting single instance..."
-	@docker run -d --name kv-service -p 3300:3300 -e ROLE=master kv-service:latest
+	@docker run -d --name kiwi -p 3300:3300 -e ROLE=master kiwi:latest
 
 # Stop Docker containers
 docker-stop:
 	@echo "Stopping Docker containers..."
-	@docker stop kv-service 2>/dev/null || true
-	@docker rm kv-service 2>/dev/null || true
+	@docker stop kiwi 2>/dev/null || true
+	@docker rm kiwi 2>/dev/null || true
 
 # Remove Docker containers and volumes
 docker-clean: cluster-down
 	@echo "Cleaning Docker resources..."
-	@docker rmi kv-service:latest 2>/dev/null || true
-	@docker rmi kv-service:$(VERSION) 2>/dev/null || true
+	@docker rmi kiwi:latest 2>/dev/null || true
+	@docker rmi kiwi:$(VERSION) 2>/dev/null || true
 	@rm -rf data/
 
 # Start cluster (1 master + 2 slaves)

@@ -7,17 +7,17 @@ import (
 	"syscall"
 	"time"
 
-	"kv-service/internal/api"
-	"kv-service/internal/config"
-	"kv-service/internal/replication"
-	"kv-service/internal/storage"
+	"kiwi/internal/api"
+	"kiwi/internal/config"
+	"kiwi/internal/replication"
+	"kiwi/internal/storage"
 )
 
 func main() {
 	// Load configuration
 	cfg := config.Load()
 
-	log.Printf("Starting KV Service %s (commit: %s)", cfg.Version, cfg.GitCommit)
+	log.Printf("Starting kiwi %s (commit: %s)", cfg.Version, cfg.GitCommit)
 	log.Printf("Node ID: %s, Role: %s", cfg.NodeID, cfg.Role)
 
 	// Initialize base storage layer

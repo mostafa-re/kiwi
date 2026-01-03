@@ -1,4 +1,4 @@
-module kv-service
+module kiwi
 
 go 1.24.0
 
